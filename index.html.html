@@ -30,11 +30,11 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
-      padding: 24px 16px 60px;
+      padding: 24px 16px 64px;
     }
 
     .container {
-      max-width: 1080px;
+      max-width: 1120px;
       margin: 0 auto;
     }
 
@@ -64,7 +64,7 @@
 
     label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: var(--muted);
       margin-bottom: 8px;
@@ -74,7 +74,7 @@
 
     textarea {
       width: 100%;
-      min-height: 110px;
+      min-height: 105px;
       background: var(--bg);
       color: var(--text);
       border: 1px solid var(--border);
@@ -90,6 +90,36 @@
     button:focus {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
+    }
+
+    .quick-builder {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .quick-builder .label-inline {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+
+    .mini-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 9px;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .mini-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     .presets {
@@ -123,10 +153,37 @@
 
     .controls {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 14px;
       margin-top: 18px;
       align-items: end;
+    }
+
+    .toggles-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      align-items: center;
+    }
+
+    .toggle-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle-check input {
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
     }
 
     select,
@@ -137,7 +194,7 @@
       border: 1px solid var(--border);
       background: var(--surface-2);
       color: var(--text);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       padding: 0 12px;
       cursor: pointer;
     }
@@ -218,7 +275,7 @@
 
     .chords-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
       gap: 16px;
     }
 
@@ -236,7 +293,8 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: center;
+      gap: 8px;
       margin-bottom: 8px;
     }
 
@@ -246,20 +304,44 @@
       color: var(--text);
     }
 
-    .chord-sub {
+    .play-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 4px 9px;
+      border-radius: 7px;
       font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .play-btn:hover {
+      background: var(--accent);
+      color: #111318;
+      border-color: var(--accent);
+    }
+
+    .chord-sub {
+      width: 100%;
+      font-size: 0.76rem;
       color: var(--muted);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
     }
 
     .voicing-switcher {
       display: flex;
-      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
       margin-bottom: 8px;
     }
 
     .voicing-btn {
       padding: 2px 8px;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       border-radius: 6px;
       border: 1px solid var(--border);
       background: var(--bg);
@@ -275,8 +357,8 @@
     }
 
     svg.fretboard {
-      width: 180px;
-      height: 205px;
+      width: 186px;
+      height: 210px;
       user-select: none;
     }
 
@@ -291,19 +373,39 @@
   <div class="container">
     <header>
       <h1>Транспозитор аккордов и аппликатуры</h1>
-      <p class="subtitle">Переводите аккорды в нужную тональность и смотрите схемы постановки пальцев на грифе</p>
+      <p class="subtitle">Транспонируйте аккорды, подбирайте позиции с баррэ, каподастр и слушайте звучание</p>
     </header>
 
     <section class="panel">
       <label for="chordInput">Текст или последовательность аккордов</label>
       <textarea id="chordInput" placeholder="Например: Am  F  C  G&#10;или: [Em7] Пусть бегут неуклюже [Am7] пешеходы [D7] по лужам..."></textarea>
 
+      <div class="quick-builder">
+        <span class="label-inline">Быстрый ввод:</span>
+        <button type="button" class="mini-btn" data-insert="C">C</button>
+        <button type="button" class="mini-btn" data-insert="D">D</button>
+        <button type="button" class="mini-btn" data-insert="E">E</button>
+        <button type="button" class="mini-btn" data-insert="F">F</button>
+        <button type="button" class="mini-btn" data-insert="G">G</button>
+        <button type="button" class="mini-btn" data-insert="A">A</button>
+        <button type="button" class="mini-btn" data-insert="B">B</button>
+        <button type="button" class="mini-btn" data-insert="#">#</button>
+        <button type="button" class="mini-btn" data-insert="b">b</button>
+        <button type="button" class="mini-btn" data-insert="m">m</button>
+        <button type="button" class="mini-btn" data-insert="7">7</button>
+        <button type="button" class="mini-btn" data-insert="maj7">maj7</button>
+        <button type="button" class="mini-btn" data-insert="sus4">sus4</button>
+        <button type="button" class="mini-btn" data-insert="add9">add9</button>
+        <button type="button" class="mini-btn" data-insert="  ">Пробел</button>
+      </div>
+
       <div class="presets">
         <span>Примеры:</span>
         <button type="button" class="chip" data-preset="Am  F  C  G">Am - F - C - G</button>
         <button type="button" class="chip" data-preset="C  G/B  Am  F  Dm7  G7">C - G/B - Am - F - Dm7 - G7</button>
-        <button type="button" class="chip" data-preset="Em  C  G  D">Em - C - G - D</button>
-        <button type="button" class="chip" data-preset="Cm7  Fm7  Bb7  Ebmaj7">Джазовый II-V-I (Cm7)</button>
+        <button type="button" class="chip" data-preset="Dsus4  D  Asus2  Bm7">Dsus4 - D - Asus2 - Bm7</button>
+        <button type="button" class="chip" data-preset="Cm7  Fm7  Bb7  Ebmaj7">Джаз II-V-I</button>
+        <button type="button" class="chip" data-preset="Cdim  Caug  C6  Cadd9">Редкие (dim/aug/6/add9)</button>
       </div>
 
       <div class="controls">
@@ -326,12 +428,31 @@
           <select id="tuningSelect">
             <option value="standard">Стандартный (E A D G B E)</option>
             <option value="dropd">Drop D (D A D G B E)</option>
+            <option value="eb">Half-step down (Eb Ab Db Gb Bb Eb)</option>
+            <option value="openg">Open G (D G D G B D)</option>
+            <option value="dadgad">DADGAD (D A D G A D)</option>
           </select>
+        </div>
+
+        <div>
+          <label for="capoSelect">Каподастр</label>
+          <select id="capoSelect"></select>
         </div>
 
         <div>
           <button type="button" class="btn btn-primary" id="transposeBtn">Обновить</button>
         </div>
+      </div>
+
+      <div class="toggles-row">
+        <label class="toggle-check">
+          <input type="checkbox" id="showNotesToggle" />
+          Показывать ноты вместо пальцев
+        </label>
+        <label class="toggle-check">
+          <input type="checkbox" id="leftHandedToggle" />
+          Леворукий режим (зеркальный гриф)
+        </label>
       </div>
     </section>
 
@@ -348,9 +469,9 @@
         <label style="margin:0;">Аппликатуры найденных аккордов</label>
       </div>
       <div class="legend">
-        <div class="legend-item"><span class="dot-sample" style="background:#ef4444;"></span> Тоника (основной тон)</div>
-        <div class="legend-item"><span class="dot-sample" style="background:#3b82f6;"></span> Остальные ноты аккорда</div>
-        <div class="legend-item"><span><b>O</b> — открытая струна</span></div>
+        <div class="legend-item"><span class="dot-sample" style="background:#ef4444;"></span> Тоника</div>
+        <div class="legend-item"><span class="dot-sample" style="background:#3b82f6;"></span> Остальные ноты</div>
+        <div class="legend-item"><span><b>O</b> — открытая</span></div>
         <div class="legend-item"><span><b>X</b> — не звучит</span></div>
       </div>
       <div id="chordsGrid" class="chords-grid"></div>
@@ -358,152 +479,70 @@
   </div>
 
   <script>
-    // Хроматическая шкала: 0 = C, 1 = C#/Db, ..., 11 = B
     const SHARP_NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     const FLAT_NOTES  = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 
-    // Базовые формы аккордов (от 6-й толстой струны к 1-й тонкой):
-    // frets: массив из 6 элементов (-1 = X, 0 = открытая, >0 = лад)
-    // fingers: массив из 6 элементов (0 = нет, 1..4 = палец)
-    // baseRootPitch: хроматический номер корня базовой формы
+    const TUNINGS = {
+      standard: { name: "Standard", notes: [4, 9, 2, 7, 11, 4] },
+      dropd:    { name: "Drop D",   notes: [2, 9, 2, 7, 11, 4] },
+      eb:       { name: "Eb",       notes: [3, 8, 1, 6, 10, 3] },
+      openg:    { name: "Open G",   notes: [2, 7, 2, 7, 11, 2] },
+      dadgad:   { name: "DADGAD",   notes: [2, 9, 2, 7, 9, 2] }
+    };
+
+    // Базовые формы от 6-й (индекс 0) к 1-й (индекс 5) струне
     const SHAPE_LIBRARY = {
-      majOpen: {
-        label: "Открытый",
-        rootPitch: 4, // E
-        frets: [0, 2, 2, 1, 0, 0],
-        fingers: [0, 2, 3, 1, 0, 0]
-      },
-      majAOpen: {
-        label: "Форма A",
-        rootPitch: 9, // A
-        frets: [-1, 0, 2, 2, 2, 0],
-        fingers: [0, 0, 1, 2, 3, 0]
-      },
-      majEBarre: {
-        label: "Баррэ (6 стр.)",
-        rootPitch: 4, // E
-        frets: [0, 2, 2, 1, 0, 0],
-        fingers: [0, 2, 3, 1, 0, 0],
-        movable: true
-      },
-      majABarre: {
-        label: "Баррэ (5 стр.)",
-        rootPitch: 9, // A
-        frets: [-1, 0, 2, 2, 2, 0],
-        fingers: [0, 0, 1, 1, 1, 0],
-        movable: true
-      },
-      minOpen: {
-        label: "Открытый",
-        rootPitch: 4, // Em
-        frets: [0, 2, 2, 0, 0, 0],
-        fingers: [0, 2, 3, 0, 0, 0]
-      },
-      minAOpen: {
-        label: "Форма Am",
-        rootPitch: 9, // Am
-        frets: [-1, 0, 2, 2, 1, 0],
-        fingers: [0, 0, 2, 3, 1, 0]
-      },
-      minEBarre: {
-        label: "Баррэ (6 стр.)",
-        rootPitch: 4, // Em
-        frets: [0, 2, 2, 0, 0, 0],
-        fingers: [0, 2, 3, 0, 0, 0],
-        movable: true
-      },
-      minABarre: {
-        label: "Баррэ (5 стр.)",
-        rootPitch: 9, // Am
-        frets: [-1, 0, 2, 2, 1, 0],
-        fingers: [0, 0, 2, 3, 1, 0],
-        movable: true
-      },
-      dom7E: {
-        label: "Баррэ 7 (6 стр.)",
-        rootPitch: 4, // E7
-        frets: [0, 2, 0, 1, 0, 0],
-        fingers: [0, 2, 0, 1, 0, 0],
-        movable: true
-      },
-      dom7A: {
-        label: "Баррэ 7 (5 стр.)",
-        rootPitch: 9, // A7
-        frets: [-1, 0, 2, 0, 2, 0],
-        fingers: [0, 0, 2, 0, 3, 0],
-        movable: true
-      },
-      min7E: {
-        label: "Баррэ m7 (6 стр.)",
-        rootPitch: 4, // Em7
-        frets: [0, 2, 0, 0, 0, 0],
-        fingers: [0, 2, 0, 0, 0, 0],
-        movable: true
-      },
-      min7A: {
-        label: "Баррэ m7 (5 стр.)",
-        rootPitch: 9, // Am7
-        frets: [-1, 0, 2, 0, 1, 0],
-        fingers: [0, 0, 2, 0, 1, 0],
-        movable: true
-      },
-      maj7A: {
-        label: "Позиция maj7",
-        rootPitch: 9, // Amaj7
-        frets: [-1, 0, 2, 1, 2, 0],
-        fingers: [0, 0, 2, 1, 3, 0],
-        movable: true
-      },
-      maj7E: {
-        label: "Позиция maj7 (6 стр.)",
-        rootPitch: 4, // Emaj7
-        frets: [0, 2, 1, 1, 0, 0],
-        fingers: [0, 3, 1, 2, 0, 0],
-        movable: true
-      }
+      majE:   { label: "Баррэ E",    anchor: 0, barreFret: 0, frets: [0, 2, 2, 1, 0, 0], fingers: [0, 2, 3, 1, 0, 0] },
+      majA:   { label: "Баррэ A",    anchor: 1, barreFret: 0, frets: [-1, 0, 2, 2, 2, 0], fingers: [0, 0, 1, 1, 1, 0] },
+      minE:   { label: "Баррэ Em",   anchor: 0, barreFret: 0, frets: [0, 2, 2, 0, 0, 0], fingers: [0, 2, 3, 0, 0, 0] },
+      minA:   { label: "Баррэ Am",   anchor: 1, barreFret: 0, frets: [-1, 0, 2, 2, 1, 0], fingers: [0, 0, 2, 3, 1, 0] },
+      dom7E:  { label: "7 (6 стр.)", anchor: 0, barreFret: 0, frets: [0, 2, 0, 1, 0, 0], fingers: [0, 2, 0, 1, 0, 0] },
+      dom7A:  { label: "7 (5 стр.)", anchor: 1, barreFret: 0, frets: [-1, 0, 2, 0, 2, 0], fingers: [0, 0, 2, 0, 3, 0] },
+      min7E:  { label: "m7 (6 стр.)",anchor: 0, barreFret: 0, frets: [0, 2, 0, 0, 0, 0], fingers: [0, 2, 0, 0, 0, 0] },
+      min7A:  { label: "m7 (5 стр.)",anchor: 1, barreFret: 0, frets: [-1, 0, 2, 0, 1, 0], fingers: [0, 0, 2, 0, 1, 0] },
+      maj7E:  { label: "maj7 (6)",   anchor: 0, barreFret: 0, frets: [0, 2, 1, 1, 0, 0], fingers: [0, 3, 1, 2, 0, 0] },
+      maj7A:  { label: "maj7 (5)",   anchor: 1, barreFret: 0, frets: [-1, 0, 2, 1, 2, 0], fingers: [0, 0, 2, 1, 3, 0] },
+      sus2A:  { label: "sus2 (5)",   anchor: 1, barreFret: 0, frets: [-1, 0, 2, 2, 0, 0], fingers: [0, 0, 1, 2, 0, 0] },
+      sus4E:  { label: "sus4 (6)",   anchor: 0, barreFret: 0, frets: [0, 2, 2, 2, 0, 0], fingers: [0, 2, 3, 4, 0, 0] },
+      sus4A:  { label: "sus4 (5)",   anchor: 1, barreFret: 0, frets: [-1, 0, 2, 2, 3, 0], fingers: [0, 0, 1, 2, 4, 0] },
+      dimA:   { label: "dim (5)",    anchor: 1, barreFret: 0, frets: [-1, 0, 1, 2, 1, -1], fingers: [0, 0, 1, 3, 2, 0] },
+      augA:   { label: "aug (5)",    anchor: 1, barreFret: 0, frets: [-1, 0, 3, 2, 2, 1], fingers: [0, 0, 4, 2, 3, 1] },
+      sixE:   { label: "6 (6 стр.)", anchor: 0, barreFret: 0, frets: [0, 2, 2, 1, 2, 0], fingers: [0, 2, 3, 1, 4, 0] },
+      add9A:  { label: "add9 (5)",   anchor: 1, barreFret: 0, frets: [-1, 0, 2, 4, 2, 0], fingers: [0, 0, 1, 4, 2, 0] }
     };
 
-    // Конкретные готовые открытые аккорды для красоты
-    const SPECIAL_OPEN_CHORDS = {
-      "C": [
-        { label: "Открытый", frets: [-1, 3, 2, 0, 1, 0], fingers: [0, 3, 2, 0, 1, 0] }
-      ],
-      "G": [
-        { label: "Открытый", frets: [3, 2, 0, 0, 0, 3], fingers: [2, 1, 0, 0, 0, 3] }
-      ],
-      "D": [
-        { label: "Открытый", frets: [-1, -1, 0, 2, 3, 2], fingers: [0, 0, 0, 1, 3, 2] }
-      ],
-      "Dm": [
-        { label: "Открытый", frets: [-1, -1, 0, 2, 3, 1], fingers: [0, 0, 0, 2, 3, 1] }
-      ],
-      "Dm7": [
-        { label: "Открытый", frets: [-1, -1, 0, 2, 1, 1], fingers: [0, 0, 0, 2, 1, 1] }
-      ],
-      "E": [
-        { label: "Открытый", frets: [0, 2, 2, 1, 0, 0], fingers: [0, 2, 3, 1, 0, 0] }
-      ],
-      "Em": [
-        { label: "Открытый", frets: [0, 2, 2, 0, 0, 0], fingers: [0, 2, 3, 0, 0, 0] }
-      ],
-      "A": [
-        { label: "Открытый", frets: [-1, 0, 2, 2, 2, 0], fingers: [0, 0, 1, 2, 3, 0] }
-      ],
-      "Am": [
-        { label: "Открытый", frets: [-1, 0, 2, 2, 1, 0], fingers: [0, 0, 2, 3, 1, 0] }
-      ]
+    const OPEN_CHORDS = {
+      "C":    [{ label: "Открытый", frets: [-1, 3, 2, 0, 1, 0], fingers: [0, 3, 2, 0, 1, 0], barre: null }],
+      "G":    [{ label: "Открытый", frets: [3, 2, 0, 0, 0, 3],  fingers: [2, 1, 0, 0, 0, 3], barre: null }],
+      "D":    [{ label: "Открытый", frets: [-1, -1, 0, 2, 3, 2], fingers: [0, 0, 0, 1, 3, 2], barre: null }],
+      "Dm":   [{ label: "Открытый", frets: [-1, -1, 0, 2, 3, 1], fingers: [0, 0, 0, 2, 3, 1], barre: null }],
+      "Dm7":  [{ label: "Открытый", frets: [-1, -1, 0, 2, 1, 1], fingers: [0, 0, 0, 2, 1, 1], barre: null }],
+      "E":    [{ label: "Открытый", frets: [0, 2, 2, 1, 0, 0],  fingers: [0, 2, 3, 1, 0, 0], barre: null }],
+      "Em":   [{ label: "Открытый", frets: [0, 2, 2, 0, 0, 0],  fingers: [0, 2, 3, 0, 0, 0], barre: null }],
+      "A":    [{ label: "Открытый", frets: [-1, 0, 2, 2, 2, 0], fingers: [0, 0, 1, 2, 3, 0], barre: null }],
+      "Am":   [{ label: "Открытый", frets: [-1, 0, 2, 2, 1, 0], fingers: [0, 0, 2, 3, 1, 0], barre: null }],
+      "Asus2":[{ label: "Открытый", frets: [-1, 0, 2, 2, 0, 0], fingers: [0, 0, 1, 2, 0, 0], barre: null }],
+      "Asus4":[{ label: "Открытый", frets: [-1, 0, 2, 2, 3, 0], fingers: [0, 0, 1, 2, 4, 0], barre: null }],
+      "Dsus4":[{ label: "Открытый", frets: [-1, -1, 0, 2, 3, 3], fingers: [0, 0, 0, 1, 3, 4], barre: null }]
     };
 
-    // Заполняем выпадающий список полутонов (-11 .. +12)
     const semitonesSelect = document.getElementById("semitonesSelect");
     for (let s = -11; s <= 12; s++) {
       const opt = document.createElement("option");
       opt.value = s;
-      if (s === 0) opt.textContent = "0 (без изменений)";
+      if (s === 0) opt.textContent = "0 (без сдвига)";
       else if (s > 0) opt.textContent = `+${s} полутон${pluralSemitone(s)}`;
       else opt.textContent = `${s} полутон${pluralSemitone(Math.abs(s))}`;
-      if (s === 2) opt.selected = true; // по умолчанию +2 полутона
+      if (s === 2) opt.selected = true;
       semitonesSelect.appendChild(opt);
+    }
+
+    const capoSelect = document.getElementById("capoSelect");
+    for (let c = 0; c <= 7; c++) {
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c === 0 ? "Без каподастра" : `Каподастр: ${c} лад`;
+      capoSelect.appendChild(opt);
     }
 
     function pluralSemitone(n) {
@@ -538,13 +577,11 @@
     function shouldUseFlat(semitones, mode, targetRootIdx) {
       if (mode === "sharp") return false;
       if (mode === "flat") return true;
-      // Автоматический режим: бемольные тональности (F, Bb, Eb, Ab, Db, Gb)
       const flatRoots = new Set([5, 10, 3, 8, 1, 6]);
       if (flatRoots.has(((targetRootIdx % 12) + 12) % 12)) return true;
       return semitones < 0;
     }
 
-    // Парсер аккорда: корень, суффикс качества, опциональный бас после "/"
     function parseChord(token) {
       const match = token.match(/^([A-G](?:#|b)?)([a-zA-Z0-9#bsusaddmajdimaug°ø+-]*)(?:\/([A-G](?:#|b)?))?$/);
       if (!match) return null;
@@ -571,8 +608,9 @@
       const newRoot = indexToNote(newRootIdx, useFlat);
 
       let newBassStr = "";
+      let newBassIdx = null;
       if (parsed.bassIdx !== null) {
-        const newBassIdx = (((parsed.bassIdx + semitones) % 12) + 12) % 12;
+        newBassIdx = (((parsed.bassIdx + semitones) % 12) + 12) % 12;
         newBassStr = "/" + indexToNote(newBassIdx, useFlat);
       }
 
@@ -583,34 +621,34 @@
           name: newToken,
           root: newRoot,
           rootIdx: newRootIdx,
-          quality: parsed.quality
+          quality: parsed.quality,
+          bassIdx: newBassIdx,
+          useFlat
         }
       };
     }
 
-    // Токенизация текста так, чтобы сохранить пробелы, переносы строк и текст песен
     function transposeText(text, semitones, accidentalMode) {
       const parts = text.split(/(\s+)/);
       const foundChords = [];
-      const seenNames = new Set();
+      const seenKeys = new Set();
 
       const renderedHtml = parts.map(part => {
         if (/^\s+$/.test(part) || part === "") return escapeHtml(part);
 
-        // Поддержка аккордов в скобках [Am7] или (Am7)
         const bracketMatch = part.match(/^([\[\(])(.+?)([\]\)])$/);
         if (bracketMatch) {
           const [, openB, inner, closeB] = bracketMatch;
           const res = transposeChordToken(inner, semitones, accidentalMode);
           if (res.chord) {
-            addUniqueChord(res.chord, foundChords, seenNames);
+            addUniqueChord(res.chord, foundChords, seenKeys);
             return `${escapeHtml(openB)}<span class="transposed-chord">${escapeHtml(res.text)}</span>${escapeHtml(closeB)}`;
           }
         }
 
         const res = transposeChordToken(part, semitones, accidentalMode);
         if (res.chord) {
-          addUniqueChord(res.chord, foundChords, seenNames);
+          addUniqueChord(res.chord, foundChords, seenKeys);
           return `<span class="transposed-chord">${escapeHtml(res.text)}</span>`;
         }
 
@@ -621,7 +659,7 @@
     }
 
     function addUniqueChord(chord, list, seen) {
-      const key = `${chord.rootIdx}|${chord.quality}`;
+      const key = `${chord.rootIdx}|${chord.quality}|${chord.bassIdx ?? ""}`;
       if (!seen.has(key)) {
         seen.add(key);
         list.push(chord);
@@ -636,88 +674,113 @@
         .replaceAll('"', "&quot;");
     }
 
-    // Генерация вариантов аппликатур для конкретного аккорда и строя
-    function getVoicingsForChord(chord, tuningMode) {
-      const q = chord.quality.toLowerCase();
-      const isMinor = q.startsWith("m") && !q.startsWith("maj");
-      const isMaj7 = q.includes("maj7");
-      const isMin7 = isMinor && q.includes("7");
-      const isDom7 = !isMinor && !isMaj7 && q.includes("7");
+    function classifyQuality(qRaw) {
+      const q = qRaw.toLowerCase();
+      if (q.includes("dim") || q.includes("°") || q.includes("ø")) return "dim";
+      if (q.includes("aug")) return "aug";
+      if (q.includes("sus2")) return "sus2";
+      if (q.includes("sus4") || q === "sus") return "sus4";
+      if (q.includes("add9")) return "add9";
+      if (q.includes("maj7")) return "maj7";
+      if (q.startsWith("m") && !q.startsWith("maj") && q.includes("7")) return "min7";
+      if (!q.startsWith("m") && q.includes("7")) return "dom7";
+      if (q.includes("6") && !q.startsWith("m")) return "six";
+      if (q.startsWith("m") && !q.startsWith("maj")) return "min";
+      return "maj";
+    }
 
-      const voicings = [];
+    function shiftShapeWithBarre(baseShape, shift, openStrings) {
+      const frets = baseShape.frets.map(f => (f === -1 ? -1 : f + shift));
+      const minPressed = Math.min(...frets.filter(f => f > 0));
+      const hasBarre = shift > 0;
 
-      // Проверяем готовые открытые аккорды (только для стандартного строя)
-      const simpleKey = `${chord.root}${isMinor ? "m" : ""}`;
-      if (tuningMode === "standard" && !q.includes("7") && SPECIAL_OPEN_CHORDS[simpleKey]) {
-        SPECIAL_OPEN_CHORDS[simpleKey].forEach(v => voicings.push({ ...v }));
-      }
+      const fingers = frets.map((f, idx) => {
+        if (f <= 0) return 0;
+        if (hasBarre) {
+          if (f === minPressed) return 1;
+          const rel = f - minPressed + 1;
+          return Math.min(4, Math.max(2, rel));
+        }
+        return baseShape.fingers[idx] || 1;
+      });
 
-      const buildShifted = (baseShape, anchorStringIndex) => {
-        // anchorStringIndex: 0 = 6-я струна, 1 = 5-я струна
-        const openStringsStandard = [4, 9, 2, 7, 11, 4]; // E A D G B E
-        const openStrings = tuningMode === "dropd"
-          ? [2, 9, 2, 7, 11, 4]
-          : openStringsStandard;
-
-        const openPitch = openStrings[anchorStringIndex];
-        let shift = (((chord.rootIdx - openPitch) % 12) + 12) % 12;
-
-        // Если сдвиг = 0 и базовая форма на открытых струнах
-        if (shift === 0 && !baseShape.movable) {
-          return {
-            label: baseShape.label,
-            frets: [...baseShape.frets],
-            fingers: [...baseShape.fingers]
+      let barre = null;
+      if (hasBarre && Number.isFinite(minPressed)) {
+        const activeIndices = frets
+          .map((f, i) => (f >= minPressed ? i : -1))
+          .filter(i => i !== -1);
+        if (activeIndices.length >= 2) {
+          barre = {
+            fret: minPressed,
+            fromString: Math.max(baseShape.anchor, activeIndices[0]),
+            toString: activeIndices[activeIndices.length - 1],
+            finger: 1
           };
         }
-
-        // Если shift === 0, берем 12-й лад или открытый вариант
-        const effectiveShift = shift === 0 ? 12 : shift;
-
-        const frets = baseShape.frets.map(f => {
-          if (f === -1) return -1;
-          return f + effectiveShift;
-        });
-
-        return {
-          label: `${baseShape.label} (${effectiveShift} лад)`,
-          frets,
-          fingers: [...baseShape.fingers]
-        };
-      };
-
-      if (isMaj7) {
-        voicings.push(buildShifted(SHAPE_LIBRARY.maj7A, 1));
-        voicings.push(buildShifted(SHAPE_LIBRARY.maj7E, 0));
-      } else if (isMin7) {
-        voicings.push(buildShifted(SHAPE_LIBRARY.min7A, 1));
-        voicings.push(buildShifted(SHAPE_LIBRARY.min7E, 0));
-      } else if (isDom7) {
-        voicings.push(buildShifted(SHAPE_LIBRARY.dom7A, 1));
-        voicings.push(buildShifted(SHAPE_LIBRARY.dom7E, 0));
-      } else if (isMinor) {
-        voicings.push(buildShifted(SHAPE_LIBRARY.minABarre, 1));
-        voicings.push(buildShifted(SHAPE_LIBRARY.minEBarre, 0));
-      } else {
-        voicings.push(buildShifted(SHAPE_LIBRARY.majABarre, 1));
-        voicings.push(buildShifted(SHAPE_LIBRARY.majEBarre, 0));
       }
 
-      // Убираем дубликаты по массиву ладов
+      const fretNum = shift === 0 ? "откр." : `${shift} лад`;
+      return {
+        label: `${baseShape.label.split(" ")[0]} (${fretNum})`,
+        frets,
+        fingers,
+        barre
+      };
+    }
+
+    function getVoicingsForChord(chord, tuningKey, capo) {
+      const tuning = TUNINGS[tuningKey] || TUNINGS.standard;
+      const effectiveOpen = tuning.notes.map(n => (n + capo) % 12);
+      const kind = classifyQuality(chord.quality);
+      const voicings = [];
+
+      // Открытые формы только для стандартного строя и без каподастра
+      if (tuningKey === "standard" && capo === 0) {
+        const openKey = `${chord.root}${kind === "min" ? "m" : kind === "min7" ? "m7" : kind === "sus2" ? "sus2" : kind === "sus4" ? "sus4" : ""}`;
+        if (OPEN_CHORDS[openKey]) {
+          OPEN_CHORDS[openKey].forEach(v => voicings.push({ ...v }));
+        }
+      }
+
+      const pairMap = {
+        maj:  [SHAPE_LIBRARY.majA, SHAPE_LIBRARY.majE],
+        min:  [SHAPE_LIBRARY.minA, SHAPE_LIBRARY.minE],
+        dom7: [SHAPE_LIBRARY.dom7A, SHAPE_LIBRARY.dom7E],
+        min7: [SHAPE_LIBRARY.min7A, SHAPE_LIBRARY.min7E],
+        maj7: [SHAPE_LIBRARY.maj7A, SHAPE_LIBRARY.maj7E],
+        sus2: [SHAPE_LIBRARY.sus2A, SHAPE_LIBRARY.majE],
+        sus4: [SHAPE_LIBRARY.sus4A, SHAPE_LIBRARY.sus4E],
+        dim:  [SHAPE_LIBRARY.dimA, SHAPE_LIBRARY.minE],
+        aug:  [SHAPE_LIBRARY.augA, SHAPE_LIBRARY.majE],
+        six:  [SHAPE_LIBRARY.sixE, SHAPE_LIBRARY.majA],
+        add9: [SHAPE_LIBRARY.add9A, SHAPE_LIBRARY.majE]
+      };
+
+      const shapes = pairMap[kind] || pairMap.maj;
+
+      for (const baseShape of shapes) {
+        const openPitch = effectiveOpen[baseShape.anchor];
+        const shift = (((chord.rootIdx - openPitch) % 12) + 12) % 12;
+        voicings.push(shiftShapeWithBarre(baseShape, shift, effectiveOpen));
+      }
+
       const unique = [];
-      const seenFrets = new Set();
+      const seen = new Set();
       for (const v of voicings) {
         const key = v.frets.join(",");
-        if (!seenFrets.has(key)) {
-          seenFrets.add(key);
+        if (!seen.has(key)) {
+          seen.add(key);
           unique.push(v);
         }
       }
       return unique.slice(0, 3);
     }
 
-    // Отрисовка SVG-схемы грифа
-    function renderFretboardSVG(voicing, rootIdx, tuningMode) {
+    function renderFretboardSVG(voicing, rootIdx, bassIdx, tuningKey, capo, options) {
+      const { showNotes, leftHanded, useFlat } = options;
+      const tuning = TUNINGS[tuningKey] || TUNINGS.standard;
+      const effectiveOpen = tuning.notes.map(n => (n + capo) % 12);
+
       const frets = voicing.frets;
       const positiveFrets = frets.filter(f => f > 0);
       const minFret = positiveFrets.length ? Math.min(...positiveFrets) : 1;
@@ -726,61 +789,99 @@
       const startFret = maxFret <= 4 ? 1 : minFret;
       const numFrets = 4;
 
-      const openStrings = tuningMode === "dropd"
-        ? [2, 9, 2, 7, 11, 4]
-        : [4, 9, 2, 7, 11, 4];
-
-      const width = 180;
-      const height = 205;
-      const leftPad = 30;
-      const topPad = 36;
+      const width = 186;
+      const height = 210;
+      const leftPad = 32;
+      const topPad = 38;
       const stringGap = 22;
-      const fretGap = 34;
+      const fretGap = 35;
+
+      const mapStringPos = (s) => {
+        const visualIdx = leftHanded ? (5 - s) : s;
+        return leftPad + visualIdx * stringGap;
+      };
 
       let svg = `<svg class="fretboard" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">`;
 
-      // Номер начального лада, если не с 1-го
       if (startFret > 1) {
-        svg += `<text x="10" y="${topPad + fretGap * 0.65}" fill="#98a2b8" font-size="11" font-weight="700">${startFret}фр</text>`;
+        svg += `<text x="8" y="${topPad + fretGap * 0.62}" fill="#98a2b8" font-size="11" font-weight="700">${startFret}фр</text>`;
       }
 
-      // Верхний порожек (nut) или тонкая линия
       const nutHeight = startFret === 1 ? 5 : 2;
       svg += `<rect x="${leftPad}" y="${topPad - nutHeight}" width="${stringGap * 5}" height="${nutHeight}" fill="#eef1f7" rx="1" />`;
 
-      // Лады (горизонтальные линии)
       for (let f = 1; f <= numFrets; f++) {
         const y = topPad + f * fretGap;
         svg += `<line x1="${leftPad}" y1="${y}" x2="${leftPad + stringGap * 5}" y2="${y}" stroke="#64748b" stroke-width="1.5" />`;
       }
 
-      // Струны (вертикальные линии, от толстой 6-й слева к тонкой 1-й справа)
+      // Струны (для правши 6-я слева, для левши — справа)
       for (let s = 0; s < 6; s++) {
-        const x = leftPad + s * stringGap;
+        const x = mapStringPos(s);
         const strokeW = 1 + (5 - s) * 0.32;
         svg += `<line x1="${x}" y1="${topPad}" x2="${x}" y2="${topPad + numFrets * fretGap}" stroke="#cbd5e1" stroke-width="${strokeW}" />`;
+      }
 
+      // Дуга баррэ
+      if (voicing.barre) {
+        const { fret, fromString, toString, finger } = voicing.barre;
+        const offset = fret - startFret + 1;
+        if (offset >= 1 && offset <= numFrets) {
+          const cy = topPad + (offset - 0.5) * fretGap;
+          const x1 = mapStringPos(fromString);
+          const x2 = mapStringPos(toString);
+          const minX = Math.min(x1, x2);
+          const maxX = Math.max(x1, x2);
+          svg += `<rect x="${minX - 8}" y="${cy - 8}" width="${(maxX - minX) + 16}" height="16" rx="8" fill="#3b82f6" opacity="0.85" />`;
+          if (!showNotes && finger) {
+            svg += `<text x="${(minX + maxX) / 2}" y="${cy + 3.5}" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">${finger}</text>`;
+          }
+        }
+      }
+
+      // Точки и маркеры над порожком
+      for (let s = 0; s < 6; s++) {
+        const x = mapStringPos(s);
         const fretVal = frets[s];
         const statusY = topPad - 13;
 
         if (fretVal === -1) {
           svg += `<text x="${x}" y="${statusY}" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="700">X</text>`;
         } else if (fretVal === 0) {
-          const notePitch = openStrings[s] % 12;
+          const notePitch = effectiveOpen[s] % 12;
           const isRoot = notePitch === rootIdx;
-          svg += `<circle cx="${x}" cy="${statusY - 4}" r="5.5" fill="none" stroke="${isRoot ? "#ef4444" : "#3b82f6"}" stroke-width="2" />`;
+          const isBass = bassIdx !== null && notePitch === bassIdx;
+          const strokeCol = isRoot ? "#ef4444" : isBass ? "#f59e0b" : "#3b82f6";
+          if (showNotes) {
+            const noteLabel = indexToNote(notePitch, useFlat);
+            svg += `<text x="${x}" y="${statusY}" text-anchor="middle" fill="${strokeCol}" font-size="10" font-weight="700">${noteLabel}</text>`;
+          } else {
+            svg += `<circle cx="${x}" cy="${statusY - 4}" r="5.5" fill="none" stroke="${strokeCol}" stroke-width="2" />`;
+          }
         } else {
           const fretOffset = fretVal - startFret + 1;
           if (fretOffset >= 1 && fretOffset <= numFrets) {
             const cy = topPad + (fretOffset - 0.5) * fretGap;
-            const notePitch = (openStrings[s] + fretVal) % 12;
+            const notePitch = (effectiveOpen[s] + fretVal) % 12;
             const isRoot = notePitch === rootIdx;
-            const fillColor = isRoot ? "#ef4444" : "#3b82f6";
-            const finger = voicing.fingers[s] || "";
+            const isBass = bassIdx !== null && notePitch === bassIdx;
+            const fillColor = isRoot ? "#ef4444" : isBass ? "#f59e0b" : "#3b82f6";
 
-            svg += `<circle cx="${x}" cy="${cy}" r="8.5" fill="${fillColor}" />`;
-            if (finger) {
-              svg += `<text x="${x}" y="${cy + 3.5}" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">${finger}</text>`;
+            const isBarreSpan = voicing.barre &&
+              voicing.barre.fret === fretVal &&
+              s >= Math.min(voicing.barre.fromString, voicing.barre.toString) &&
+              s <= Math.max(voicing.barre.fromString, voicing.barre.toString);
+
+            if (!isBarreSpan || isRoot) {
+              svg += `<circle cx="${x}" cy="${cy}" r="8.8" fill="${fillColor}" />`;
+            }
+
+            const labelText = showNotes
+              ? indexToNote(notePitch, useFlat)
+              : (voicing.fingers[s] || "");
+
+            if (labelText && (!isBarreSpan || isRoot || showNotes)) {
+              svg += `<text x="${x}" y="${cy + 3.5}" text-anchor="middle" fill="#ffffff" font-size="9.5" font-weight="700">${labelText}</text>`;
             }
           }
         }
@@ -790,11 +891,59 @@
       return svg;
     }
 
+    // Озвучка аккорда через Web Audio API
+    let audioCtx = null;
+    function playVoicingAudio(voicing, tuningKey, capo) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      if (!audioCtx) audioCtx = new AudioContextClass();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+
+      const tuning = TUNINGS[tuningKey] || TUNINGS.standard;
+      // MIDI-ноты открытых струн (6-я -> 1-я)
+      const baseMidiStandard = [40, 45, 50, 55, 59, 64];
+      const deltaFromStd = tuning.notes.map((n, i) => {
+        let diff = (n - TUNINGS.standard.notes[i]) % 12;
+        if (diff > 6) diff -= 12;
+        if (diff < -6) diff += 12;
+        return diff;
+      });
+
+      const now = audioCtx.currentTime;
+      let step = 0;
+
+      voicing.frets.forEach((f, s) => {
+        if (f < 0) return;
+        const midi = baseMidiStandard[s] + deltaFromStd[s] + capo + f;
+        const freq = 440 * Math.pow(2, (midi - 69) / 12);
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, now + step * 0.055);
+
+        const startT = now + step * 0.055;
+        gain.gain.setValueAtTime(0.0001, startT);
+        gain.gain.exponentialRampToValueAtTime(0.14, startT + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startT + 1.15);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(startT);
+        osc.stop(startT + 1.2);
+        step++;
+      });
+    }
+
     function renderAll() {
       const rawText = document.getElementById("chordInput").value;
       const semitones = parseInt(semitonesSelect.value, 10);
       const accidentalMode = document.getElementById("accidentalSelect").value;
-      const tuningMode = document.getElementById("tuningSelect").value;
+      const tuningKey = document.getElementById("tuningSelect").value;
+      const capo = parseInt(capoSelect.value, 10);
+      const showNotes = document.getElementById("showNotesToggle").checked;
+      const leftHanded = document.getElementById("leftHandedToggle").checked;
 
       const outputEl = document.getElementById("transposedOutput");
       const gridEl = document.getElementById("chordsGrid");
@@ -809,7 +958,7 @@
       }
 
       foundChords.forEach(chord => {
-        const voicings = getVoicingsForChord(chord, tuningMode);
+        const voicings = getVoicingsForChord(chord, tuningKey, capo);
         let activeIdx = 0;
 
         const card = document.createElement("div");
@@ -817,11 +966,29 @@
 
         const header = document.createElement("div");
         header.className = "chord-header";
-        header.innerHTML = `
-          <span class="chord-name">${escapeHtml(chord.name)}</span>
-          <span class="chord-sub">Тон: ${escapeHtml(chord.root)}</span>
-        `;
+
+        const titleEl = document.createElement("span");
+        titleEl.className = "chord-name";
+        titleEl.textContent = chord.name;
+
+        const playBtn = document.createElement("button");
+        playBtn.type = "button";
+        playBtn.className = "play-btn";
+        playBtn.textContent = "▶ Звук";
+        playBtn.addEventListener("click", () => {
+          playVoicingAudio(voicings[activeIdx], tuningKey, capo);
+        });
+
+        header.appendChild(titleEl);
+        header.appendChild(playBtn);
         card.appendChild(header);
+
+        const subEl = document.createElement("div");
+        subEl.className = "chord-sub";
+        const capoNoteIdx = (((chord.rootIdx - capo) % 12) + 12) % 12;
+        const capoHint = capo > 0 ? `Форма: ${indexToNote(capoNoteIdx, chord.useFlat)}` : `Тон: ${chord.root}`;
+        subEl.innerHTML = `<span>${escapeHtml(capoHint)}</span><span>${escapeHtml(TUNINGS[tuningKey].name)}</span>`;
+        card.appendChild(subEl);
 
         const switcher = document.createElement("div");
         switcher.className = "voicing-switcher";
@@ -832,7 +999,14 @@
           [...switcher.children].forEach((btn, i) => {
             btn.classList.toggle("active", i === activeIdx);
           });
-          svgWrapper.innerHTML = renderFretboardSVG(voicings[activeIdx], chord.rootIdx, tuningMode);
+          svgWrapper.innerHTML = renderFretboardSVG(
+            voicings[activeIdx],
+            chord.rootIdx,
+            chord.bassIdx,
+            tuningKey,
+            capo,
+            { showNotes, leftHanded, useFlat: chord.useFlat }
+          );
         };
 
         voicings.forEach((v, i) => {
@@ -855,16 +1029,32 @@
       });
     }
 
-    // События
     document.getElementById("transposeBtn").addEventListener("click", renderAll);
     document.getElementById("chordInput").addEventListener("input", renderAll);
     semitonesSelect.addEventListener("change", renderAll);
     document.getElementById("accidentalSelect").addEventListener("change", renderAll);
     document.getElementById("tuningSelect").addEventListener("change", renderAll);
+    capoSelect.addEventListener("change", renderAll);
+    document.getElementById("showNotesToggle").addEventListener("change", renderAll);
+    document.getElementById("leftHandedToggle").addEventListener("change", renderAll);
 
     document.querySelectorAll(".chip").forEach(chip => {
       chip.addEventListener("click", () => {
         document.getElementById("chordInput").value = chip.dataset.preset;
+        renderAll();
+      });
+    });
+
+    document.querySelectorAll(".mini-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const ta = document.getElementById("chordInput");
+        const insert = btn.dataset.insert;
+        const start = ta.selectionStart ?? ta.value.length;
+        const end = ta.selectionEnd ?? ta.value.length;
+        ta.value = ta.value.slice(0, start) + insert + ta.value.slice(end);
+        const newPos = start + insert.length;
+        ta.focus();
+        ta.setSelectionRange(newPos, newPos);
         renderAll();
       });
     });
@@ -881,7 +1071,6 @@
       } catch (_) {}
     });
 
-    // Стартовый пример
     document.getElementById("chordInput").value = "Am  F  C  G";
     renderAll();
   </script>
